@@ -90,6 +90,10 @@ NSString * const QPickerTableViewCellIdentifier = @"QPickerTableViewCell";
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
+    if (component > self.pickerElement.items.count - 1) {
+        return 0;
+    }
+    
     return [[self.pickerElement.items objectAtIndex:(NSUInteger) component] count];
 }
 
@@ -122,8 +126,7 @@ NSString * const QPickerTableViewCellIdentifier = @"QPickerTableViewCell";
             [componentsValues addObject:[NSNull null]];
         }
     }
-
-    NSLog(@"AA%@", [self.pickerElement.valueParser objectFromComponentsValues:componentsValues]);
+    
     return [self.pickerElement.valueParser objectFromComponentsValues:componentsValues];
 }
 
@@ -139,7 +142,7 @@ NSString * const QPickerTableViewCellIdentifier = @"QPickerTableViewCell";
         for (int rowIdx = 0; rowIdx < numberOfRows; rowIdx++)
         {
             NSString *rowTitle =  [self pickerView:_pickerView titleForRow:rowIdx forComponent:componentIndex];
-            if ([componentValue isEqual:rowTitle])
+            if ([componentValue isEqualToString:rowTitle])
             {
                 [_pickerView selectRow:rowIdx inComponent:componentIndex animated:YES];
                 break;
