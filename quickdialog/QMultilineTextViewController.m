@@ -42,7 +42,20 @@
 
 - (void)loadView
 {
-    self.view = _textView;
+    [super loadView];
+    [self.view addSubview:_textView];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setBackgroundImage:[[UIImage imageNamed:@"nav_back_button.png"] stretchableImageWithLeftCapWidth:30 topCapHeight:10] forState:UIControlStateNormal];
+    [button setFrame:CGRectMake(0, 0, 60, 29)];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [button.titleLabel setFont:[UIFont fontWithName:@"Arial-BoldMT" size:12]];
+    [button setTitleEdgeInsets:UIEdgeInsetsMake(0, 5, 0, 0)];
+    [button setTitle:@"Back" forState:UIControlStateNormal];
+    [button addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *barButton =[[UIBarButtonItem alloc] initWithCustomView:button];
+
+    self.navigationItem.leftBarButtonItem = barButton;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -84,12 +97,8 @@
     [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&animationDuration];
     [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardEndFrame];
 
-    [UIView animateWithDuration:animationDuration delay:0 options:animationCurve
-        animations:^{
-            CGRect keyboardFrame = [self.view convertRect:keyboardEndFrame toView:nil];
-            _textView.contentInset = UIEdgeInsetsMake(0.0, 0.0,  up ? keyboardFrame.size.height : 0, 0.0);
-        }
-        completion:NULL];
+    CGRect keyboardFrame = [self.view convertRect:keyboardEndFrame toView:nil];
+    _textView.frame = CGRectMake(0,44,self.view.frame.size.width, up ? (keyboardFrame.size.height-15) : 0);
 }
 
 - (void)setResizeWhenKeyboardPresented:(BOOL)observesKeyboard {
