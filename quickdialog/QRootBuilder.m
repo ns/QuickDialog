@@ -36,6 +36,8 @@ NSDictionary *QRootBuilderStringToTypeConversionDict;
         [target setValue:value forKeyPath:propertyName];
     } else if ([value isKindOfClass:[NSDictionary class]]){
         [target setValue:value forKeyPath:propertyName];
+    } else if ([[NSNull null] isEqual:value]){
+        [target setValue:nil forKeyPath:propertyName];
     } else if ([value isKindOfClass:[NSObject class]]){
         [target setValue:value forKeyPath:propertyName];
     } else if (value == nil){
