@@ -98,7 +98,7 @@
     [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardEndFrame];
 
     CGRect keyboardFrame = [self.view convertRect:keyboardEndFrame toView:nil];
-    _textView.frame = CGRectMake(0,44,self.view.frame.size.width, up ? (keyboardFrame.size.height-15) : 0);
+    _textView.frame = CGRectMake(0,0,self.view.frame.size.width, up ? (keyboardFrame.size.height-15) : 0);
 }
 
 - (void)setResizeWhenKeyboardPresented:(BOOL)observesKeyboard {
